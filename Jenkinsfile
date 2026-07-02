@@ -10,22 +10,24 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build Docker Image') {
             steps {
-                echo "Build stage running (no docker used)"
+                sh 'docker build -t jenkins-app .'
             }
         }
 
-        stage('Test') {
+        stage('Stop Old Container') {
             steps {
-                echo "Test stage running"
+                sh 'docker stop jenkins-app-container || true'
+                sh 'docker rm jenkins-app-container || true'
             }
         }
 
-        stage('Deploy') {
+        stage('Run Container') {
             steps {
-                echo "Deploy stage completed (demo pipeline)"
+                sh 'docker run -d -p 8081:80 --name jenkins-app-container jenkins-app'
             }
         }
     }
 }
+
