@@ -2,22 +2,29 @@ pipeline {
     agent any
 
     stages {
+
         stage('Checkout') {
             steps {
-                checkout scm
+                git branch: 'main',
+                url: 'https://github.com/ummu7555/jenkins-pipeline-project.git'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'docker build -t jenkins-app .'
+                echo "Build stage running (no docker used)"
             }
         }
 
-        stage('Run') {
+        stage('Test') {
             steps {
-                sh 'docker ps'
-                sh 'docker run -d -p 8002:80 --name jenkins-app jenkins-app || true'
+                echo "Test stage running"
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo "Deploy stage completed (demo pipeline)"
             }
         }
     }
