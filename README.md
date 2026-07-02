@@ -1,4 +1,6 @@
-# 🚀 CI/CD Pipeline Automation Using Jenkins
+https://ummu7555.github.io/jenkins-pipeline-project/# 
+
+🚀 CI/CD Pipeline Automation Using Jenkins
 
 Automated CI/CD pipeline that builds, tests, and deploys a static Nginx-based website using Jenkins, Docker, and GitHub webhook integration — eliminating manual server login for every release.
 
