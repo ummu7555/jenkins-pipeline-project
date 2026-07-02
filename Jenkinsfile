@@ -2,29 +2,43 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone') {
+
+        stage('Checkout Code') {
             steps {
-                echo 'Cloning repository...'
+                echo "Cloning repository..."
+                checkout scm
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t jenkins-pipeline-project .'
+                echo "Building Docker image..."
+                sh 'docker build -t jenkins-pipeline-project .'
+            }
+        }
+
+        stage('Stop Old Container (if running)') {
+            steps {
+                echo "Stopping old container..."
+                sh 'docker stop jenkins-container || true'
+                sh 'docker rm jenkins-container || true'
             }
         }
 
         stage('Run Docker Container') {
             steps {
-                bat 'docker rm -f jenkins-project || exit 0'
-                bat 'docker run -d --name jenkins-project -p 8082:80 jenkins-pipeline-project'
+                echo "Running new container..."
+                sh 'docker run -d -p 8002:80 --name jenkins-container jenkins-pipeline-project'
             }
         }
     }
 
     post {
         success {
-            echo 'Deployment Successful!'
+            echo "Pipeline executed successfully 🚀"
+        }
+        failure {
+            echo "Pipeline failed ❌ check logs"
         }
     }
 }
