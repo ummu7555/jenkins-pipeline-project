@@ -18,7 +18,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                echo "Test running successfully"
+                echo "Testt running successfully"
             }
         }
 
